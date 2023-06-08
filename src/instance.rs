@@ -6,6 +6,12 @@ use mahf::{
 };
 use std::ops::RangeInclusive;
 
+/// A COCO problem instance.
+///
+/// This represents a [coco_rs::Problem].
+/// Evaluating this requires a [crate::InstanceEvaluator] in the [mahf::State].
+/// It can be inserted when calling [mahf::Configuration::optimize_with].
+/// You can take a look at [crate::evaluate_suite] for an example.
 #[derive(serde::Serialize)]
 pub struct Instance {
     pub(crate) function_idx: usize,
@@ -19,11 +25,8 @@ pub struct Instance {
 }
 
 impl Instance {
-    pub fn format_name(&self) -> String {
-        self.name.clone()
-    }
-
-    pub fn from(problem: &Problem) -> Self {
+    /// Creates an [Instance] from a [Problem].
+    pub(crate) fn from(problem: &Problem) -> Self {
         let name = problem.id().to_string();
         let dimension = problem.dimension();
         let ranges_of_interest = problem.get_ranges_of_interest();
@@ -47,7 +50,7 @@ impl problems::Problem for Instance {
     type Objective = SingleObjective;
 
     fn name(&self) -> &str {
-        "Coco"
+        &self.name
     }
 
     fn default_evaluator<'a>(&self) -> EvaluatorInstance<'a, Self> {

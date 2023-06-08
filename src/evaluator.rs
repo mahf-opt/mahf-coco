@@ -6,11 +6,16 @@ use mahf::{
     state::{common::EvaluatorInstance, State},
 };
 
+/// Evaluates [Instance]s.
+///
+/// Must be inserted manually during [mahf::Configuration::optimize_with] or
+/// it will be inserted automatically during [crate::evaluate_suite].
 pub struct InstanceEvaluator<'s> {
     problem: Problem<'s>,
 }
 
 impl<'s> InstanceEvaluator<'s> {
+    /// Creates a new evaluator for the given suite and instance.
     pub fn new(suite: &'s mut Suite, instance: &Instance) -> EvaluatorInstance<'s, Instance> {
         EvaluatorInstance::new(InstanceEvaluator {
             problem: suite.problem_for_instance(instance),
