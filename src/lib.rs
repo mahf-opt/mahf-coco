@@ -1,14 +1,10 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
-}
+mod evaluation;
+mod evaluator;
+mod instance;
+mod suits;
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+pub use coco_rs::SuiteName;
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
-}
+pub use evaluation::evaluate_suite;
+pub use instance::Instance;
+pub use suits::Suite;
