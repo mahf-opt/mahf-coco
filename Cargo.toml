@@ -5,8 +5,9 @@ authors = ["Leopold Luley <git@leopoldluley.de>"]
 edition = "2021"
 
 [dependencies]
-mahf = { git = "https://github.com/mahf-opt/mahf" }
+mahf = { git = "https://github.com/mahf-opt/mahf", rev = "e7a520a" }
 coco-rs = "0.6"
 serde = { version = "1.0.131", features = ["derive"] }
 anyhow = "1.0.71"
 scoped_threadpool = "0.1.9"
+better_any = "0.2.0"

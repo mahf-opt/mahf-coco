@@ -4,7 +4,7 @@ use mahf::{
     problems::{self},
     state::common::EvaluatorInstance,
 };
-use std::ops::RangeInclusive;
+use std::ops::Range;
 
 /// A COCO problem instance.
 ///
@@ -20,7 +20,7 @@ pub struct Instance {
 
     name: String,
     dimension: usize,
-    ranges_of_interest: Vec<RangeInclusive<f64>>,
+    ranges_of_interest: Vec<Range<f64>>,
     final_target_value: f64,
 }
 
@@ -31,6 +31,12 @@ impl Instance {
         let dimension = problem.dimension();
         let ranges_of_interest = problem.get_ranges_of_interest();
         let final_target_value = problem.final_target_value();
+
+        // TODO: update this once MAHF can distinguish inclusive and exclusive domains.
+        let ranges_of_interest = ranges_of_interest
+            .into_iter()
+            .map(|range| (*range.start())..(*range.end()))
+            .collect();
 
         Instance {
             function_idx: problem.function_index(),
@@ -59,7 +65,7 @@ impl problems::Problem for Instance {
 }
 
 impl problems::VectorProblem for Instance {
-    type T = f64;
+    type Element = f64;
 
     fn dimension(&self) -> usize {
         self.dimension
@@ -67,16 +73,13 @@ impl problems::VectorProblem for Instance {
 }
 
 impl problems::LimitedVectorProblem for Instance {
-    fn range(&self, dimension: usize) -> std::ops::Range<Self::T> {
-        let range = self.ranges_of_interest[dimension].clone();
-
-        let (start, end) = range.into_inner();
-        start..end
+    fn domain(&self) -> Vec<std::ops::Range<Self::Element>> {
+        self.ranges_of_interest.clone()
     }
 }
 
-impl problems::HasKnownTarget for Instance {
-    fn target_hit(&self, target: SingleObjective) -> bool {
-        target.value() <= self.final_target_value
+impl problems::KnownOptimumProblem for Instance {
+    fn known_optimum(&self) -> SingleObjective {
+        self.final_target_value.try_into().unwrap()
     }
 }

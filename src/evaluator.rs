@@ -2,7 +2,7 @@ use crate::{instance::Instance, Suite};
 pub use coco_rs::Problem;
 use mahf::{
     framework::{Individual, SingleObjective},
-    problems::Evaluator,
+    problems::Evaluate,
     state::{common::EvaluatorInstance, State},
 };
 
@@ -23,7 +23,7 @@ impl<'s> InstanceEvaluator<'s> {
     }
 }
 
-impl Evaluator for InstanceEvaluator<'_> {
+impl Evaluate for InstanceEvaluator<'_> {
     type Problem = Instance;
 
     fn evaluate(
@@ -36,7 +36,7 @@ impl Evaluator for InstanceEvaluator<'_> {
             let mut out = [0.0];
             self.problem
                 .evaluate_function(individual.solution(), &mut out);
-            individual.evaluate(SingleObjective::try_from(out[0]).unwrap())
+            individual.set_objective(SingleObjective::try_from(out[0]).unwrap());
         }
     }
 }
