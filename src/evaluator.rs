@@ -22,6 +22,17 @@ impl<'s> InstanceEvaluator<'s> {
         })
     }
 
+    /// Creates a new instance for the given suite and instance.
+    ///
+    /// This is only needed for custom evaluation procedures.
+    /// Normally you want to add it directly to the [State] as
+    /// an [EvaluatorInstance], so using [InstanceEvaluator::new] is preferred.
+    pub fn new_raw(suite: &'s mut Suite, instance: &Instance) -> Self {
+        InstanceEvaluator {
+            problem: suite.problem_for_instance(instance),
+        }
+    }
+
     pub fn evaluate_individuals(&mut self, individuals: &mut [Individual<Instance>]) {
         for individual in individuals {
             let mut out = [0.0];
