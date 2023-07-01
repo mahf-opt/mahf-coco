@@ -21,6 +21,15 @@ impl<'s> InstanceEvaluator<'s> {
             problem: suite.problem_for_instance(instance),
         })
     }
+
+    pub fn evaluate_individuals(&mut self, individuals: &mut [Individual<Instance>]) {
+        for individual in individuals {
+            let mut out = [0.0];
+            self.problem
+                .evaluate_function(individual.solution(), &mut out);
+            individual.set_objective(SingleObjective::try_from(out[0]).unwrap());
+        }
+    }
 }
 
 impl Evaluate for InstanceEvaluator<'_> {
@@ -32,11 +41,6 @@ impl Evaluate for InstanceEvaluator<'_> {
         _state: &mut State<Self::Problem>,
         individuals: &mut [Individual<Self::Problem>],
     ) {
-        for individual in individuals {
-            let mut out = [0.0];
-            self.problem
-                .evaluate_function(individual.solution(), &mut out);
-            individual.set_objective(SingleObjective::try_from(out[0]).unwrap());
-        }
+        self.evaluate_individuals(individuals);
     }
 }
