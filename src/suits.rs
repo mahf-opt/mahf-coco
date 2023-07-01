@@ -34,7 +34,7 @@ impl Suite {
     /// Returns the [coco_rs::Problem] for a specific instance.
     pub(crate) fn problem_for_instance(&mut self, instance: &Instance) -> coco_rs::Problem {
         self.inner
-            .problem_by_function_dimension_instance(
+            .problem_by_function_dimension_instance_index(
                 instance.function_idx,
                 instance.dimension_idx,
                 instance.instance_idx,
