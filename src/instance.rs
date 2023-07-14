@@ -1,8 +1,7 @@
 use coco_rs::Problem;
 use mahf::{
-    framework::SingleObjective,
     problems::{self},
-    state::common::EvaluatorInstance,
+    SingleObjective,
 };
 use std::ops::Range;
 
@@ -57,10 +56,6 @@ impl problems::Problem for Instance {
 
     fn name(&self) -> &str {
         &self.name
-    }
-
-    fn default_evaluator<'a>(&self) -> EvaluatorInstance<'a, Self> {
-        unimplemented!("the evaluator has to be inserted manually")
     }
 }
 

@@ -1,10 +1,6 @@
 use crate::{instance::Instance, Suite};
 pub use coco_rs::Problem;
-use mahf::{
-    framework::{Individual, SingleObjective},
-    problems::Evaluate,
-    state::{common::EvaluatorInstance, State},
-};
+use mahf::{problems::Evaluate, state::State, Individual, SingleObjective};
 
 /// Evaluates [Instance]s.
 ///
@@ -16,18 +12,7 @@ pub struct InstanceEvaluator<'s> {
 
 impl<'s> InstanceEvaluator<'s> {
     /// Creates a new evaluator for the given suite and instance.
-    pub fn new(suite: &'s mut Suite, instance: &Instance) -> EvaluatorInstance<'s, Instance> {
-        EvaluatorInstance::new(InstanceEvaluator {
-            problem: suite.problem_for_instance(instance),
-        })
-    }
-
-    /// Creates a new instance for the given suite and instance.
-    ///
-    /// This is only needed for custom evaluation procedures.
-    /// Normally you want to add it directly to the [State] as
-    /// an [EvaluatorInstance], so using [InstanceEvaluator::new] is preferred.
-    pub fn new_raw(suite: &'s mut Suite, instance: &Instance) -> Self {
+    pub fn new(suite: &'s mut Suite, instance: &Instance) -> Self {
         InstanceEvaluator {
             problem: suite.problem_for_instance(instance),
         }
