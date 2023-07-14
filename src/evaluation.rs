@@ -28,12 +28,12 @@ pub fn evaluate_suite(
         scope.spawn(move || {
             let mut pool = scoped_threadpool::Pool::new(threads);
 
-            while let Some(instance) = suite.next() {
-                // Create a new suite, because COCO doesn't guarantee that
-                // multiple problems can be created from one suite simultaneously.
-                let mut suite = suite.clone();
+            pool.scoped(move |pool| {
+                while let Some(instance) = suite.next() {
+                    // Create a new suite, because COCO doesn't guarantee that
+                    // multiple problems can be created from one suite simultaneously.
+                    let mut suite = suite.clone();
 
-                pool.scoped(move |pool| {
                     pool.execute(move || {
                         let state = configuration
                             .optimize_with(&instance, |state| {
@@ -47,8 +47,8 @@ pub fn evaluate_suite(
 
                         on_complete(instance, state);
                     });
-                });
-            }
+                }
+            });
         });
 
         Ok(())
