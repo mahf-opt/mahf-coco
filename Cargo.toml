@@ -3,6 +3,12 @@ name = "mahf-coco"
 version = "0.1.0"
 authors = ["Leopold Luley <git@leopoldluley.de>"]
 edition = "2021"
+description = "COCO problem library for MAHF"
+readme = "Readme.md"
+license = "GPL-3.0-or-later"
+repository = "https://github.com/mahf-opt/mahf-coco"
+keywords = ["mahf", "coco", "benchmark", "optimization", "metaheuristic"]
+categories = ["science", "algorithms"]
 
 [dependencies]
 mahf = "0.1"
