@@ -8,8 +8,8 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-mahf = { git = "https://github.com/mahf-opt/mahf" }
-mahf_coco = { git = "https://github.com/mahf-opt/mahf-coco" }
+mahf = "0.1.0"
+mahf_coco = "0.1.0"
 ```
 
 Constructing the `bbob` suite and iterating through the problem instances:
