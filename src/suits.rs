@@ -1,9 +1,10 @@
-use crate::Instance;
 use coco_rs::SuiteName;
+
+use crate::Instance;
 
 /// A COCO benchmark suite.
 ///
-/// It's a thin wrapper around [coco_rs::Suite] to simplify integration with MAHF.
+/// It's a thin wrapper around [`coco_rs::Suite`] to simplify integration with MAHF.
 #[derive(Clone)]
 pub struct Suite {
     inner: coco_rs::Suite,
@@ -31,7 +32,7 @@ impl Suite {
         self.inner.number_of_problems()
     }
 
-    /// Returns the [coco_rs::Problem] for a specific instance.
+    /// Returns the [`coco_rs::Problem`] for a specific instance.
     pub(crate) fn problem_for_instance(&mut self, instance: &Instance) -> coco_rs::Problem {
         self.inner
             .problem_by_function_dimension_instance_index(

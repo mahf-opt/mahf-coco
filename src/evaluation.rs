@@ -1,21 +1,24 @@
-use crate::{evaluator::InstanceEvaluator, Instance, Suite};
-use mahf::{Configuration, ExecResult, State};
 use std::thread;
 
-/// Evaluate a [Suite] efficiently.
+use mahf::{Configuration, ExecResult, State};
+
+use crate::{evaluator::InstanceEvaluator, Instance, Suite};
+
+/// Evaluate a [`Suite`] efficiently.
 ///
 /// The suite will be evaluated on `threads` threads in parallel.
 ///
-/// `on_setup` will be called to configure state during [Configuration::optimize_with].
+/// # Callbacks
+///
+/// - `on_setup` will be called to configure state during [`Configuration::optimize_with`].
 /// It can be used to setup logging or insert custom state.
 ///
-/// `on_complete` will be called after each evaluation.
+/// - `on_complete` will be called after each evaluation.
 /// It can be used to write the log to a file or display progress.
 pub fn evaluate_suite(
     suite: Suite,
     configuration: Configuration<Instance>,
     threads: u32,
-
     on_setup: impl Fn(&mut State<Instance>) -> ExecResult<()> + Send + Sync,
     on_complete: impl Fn(Instance, State<Instance>) + Send + Sync,
 ) -> anyhow::Result<()> {

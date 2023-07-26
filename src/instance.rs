@@ -1,16 +1,23 @@
+use std::ops::Range;
+
 use coco_rs::Problem;
 use mahf::{
     problems::{self},
     SingleObjective,
 };
-use std::ops::Range;
 
 /// A COCO problem instance.
 ///
-/// This represents a [coco_rs::Problem].
-/// Evaluating this requires a [crate::InstanceEvaluator] in the [mahf::State].
-/// It can be inserted when calling [mahf::Configuration::optimize_with].
-/// You can take a look at [crate::evaluate_suite] for an example.
+/// This represents a [`Problem`].
+///
+/// Evaluating this requires a [`InstanceEvaluator`] in the [`mahf::State`].
+///
+/// It can be inserted when calling [`mahf::Configuration::optimize_with`].
+///
+/// You can take a look at [`evaluate_suite`] for an example.
+///
+/// [`InstanceEvaluator`]: crate::InstanceEvaluator
+/// [`evaluate_suite`]: crate::evaluate_suite
 #[derive(serde::Serialize)]
 pub struct Instance {
     pub(crate) function_idx: usize,
@@ -24,7 +31,7 @@ pub struct Instance {
 }
 
 impl Instance {
-    /// Creates an [Instance] from a [Problem].
+    /// Creates an [`Instance`] from a [`Problem`].
     pub(crate) fn from(problem: &Problem) -> Self {
         let name = problem.id().to_string();
         let dimension = problem.dimension();
@@ -68,7 +75,7 @@ impl problems::VectorProblem for Instance {
 }
 
 impl problems::LimitedVectorProblem for Instance {
-    fn domain(&self) -> Vec<std::ops::Range<Self::Element>> {
+    fn domain(&self) -> Vec<Range<Self::Element>> {
         self.ranges_of_interest.clone()
     }
 }
