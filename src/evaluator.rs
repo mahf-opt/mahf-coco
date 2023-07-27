@@ -1,11 +1,14 @@
-use crate::{instance::Instance, Suite};
 pub use coco_rs::Problem;
 use mahf::{problems::Evaluate, state::State, Individual, SingleObjective};
 
-/// Evaluates [Instance]s.
+use crate::{instance::Instance, Suite};
+
+/// Evaluates [`Instance`]s.
 ///
-/// Must be inserted manually during [mahf::Configuration::optimize_with] or
-/// it will be inserted automatically during [crate::evaluate_suite].
+/// Must be inserted manually during [`mahf::Configuration::optimize_with`] or
+/// it will be inserted automatically during [`evaluate_suite`].
+///
+/// [`evaluate_suite`]: crate::evaluate_suite
 pub struct InstanceEvaluator<'s> {
     problem: Problem<'s>,
 }
