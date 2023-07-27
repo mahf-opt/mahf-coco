@@ -1,5 +1,11 @@
 # MAHF COCO
 
+![Crates.io](https://img.shields.io/crates/v/mahf-coco)
+![docs.rs](https://img.shields.io/docsrs/mahf-coco?logo=docsdotrs)
+![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/mahf-opt/mahf-coco/ci.yml?logo=github)
+![GitHub](https://img.shields.io/github/license/mahf-opt/mahf-coco)
+
+
 [MAHF](https://github.com/mahf-opt/mahf) bindings for the [COCO](https://github.com/numbbo/coco) benchmarking framework.
 
 ## Getting Started
