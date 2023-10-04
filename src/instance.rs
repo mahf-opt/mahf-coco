@@ -16,13 +16,11 @@ use mahf::{
 ///
 /// You can take a look at [`evaluate_suite`] for an example.
 ///
-/// [`InstanceEvaluator`]: crate::InstanceEvaluator
+/// [`InstanceEvaluator`]: crate::StandardEvaluator
 /// [`evaluate_suite`]: crate::evaluate_suite
 #[derive(serde::Serialize)]
 pub struct Instance {
-    pub(crate) function_idx: usize,
-    pub(crate) instance_idx: usize,
-    pub(crate) dimension_idx: usize,
+    pub(crate) problem_idx: usize,
 
     name: String,
     dimension: usize,
@@ -35,7 +33,7 @@ impl Instance {
     pub(crate) fn from(problem: &Problem) -> Self {
         let name = problem.id().to_string();
         let dimension = problem.dimension();
-        let ranges_of_interest = problem.get_ranges_of_interest();
+        let ranges_of_interest = problem.ranges_of_interest();
         let final_target_value = problem.final_target_value();
 
         // TODO: update this once MAHF can distinguish inclusive and exclusive domains.
@@ -45,10 +43,7 @@ impl Instance {
             .collect();
 
         Instance {
-            function_idx: problem.function_index(),
-            instance_idx: problem.instance_index(),
-            dimension_idx: problem.dimension_index(),
-
+            problem_idx: problem.suite_index().0,
             name,
             dimension,
             ranges_of_interest,

@@ -2,7 +2,7 @@ use std::thread;
 
 use mahf::{Configuration, ExecResult, State};
 
-use crate::{evaluator::InstanceEvaluator, Instance, Suite};
+use crate::{evaluator::StandardEvaluator, Instance, Suite};
 
 /// Evaluate a [`Suite`] efficiently.
 ///
@@ -21,7 +21,7 @@ pub fn evaluate_suite(
     threads: u32,
     on_setup: impl Fn(&mut State<Instance>) -> ExecResult<()> + Send + Sync,
     on_complete: impl Fn(Instance, State<Instance>) + Send + Sync,
-) -> anyhow::Result<()> {
+) -> ExecResult<()> {
     let mut suite = suite;
     let configuration = &configuration;
     let on_setup = &on_setup;
@@ -40,7 +40,7 @@ pub fn evaluate_suite(
                     pool.execute(move || {
                         let state = configuration
                             .optimize_with(&instance, |state| {
-                                state.insert_evaluator(InstanceEvaluator::new(
+                                state.insert_evaluator(StandardEvaluator::new(
                                     &mut suite, &instance,
                                 ));
 
