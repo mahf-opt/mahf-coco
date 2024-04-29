@@ -19,7 +19,7 @@ default = ["c"]
 
 [dependencies]
 mahf = "0.1.0"
-coco-rs = { git = "https://github.com/Saethox/coco", branch = "rust-0.7.1" }
+coco-rs = { git = "https://github.com/HeleNoir/coco", branch = "rust-0.7.1" }
 coco-accelerated = { git = "https://github.com/Saethox/coco-accelerated", branch = "restructure-and-cleanup" }
 serde = { version = "1.0.131", features = ["derive"] }
 scoped_threadpool = "0.1.9"
